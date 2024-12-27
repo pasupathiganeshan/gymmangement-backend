@@ -14,8 +14,7 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     userId:{
-        type:Number,
-        required:true,
+        type:Number
     },
     type: {
         type: String,
@@ -25,8 +24,6 @@ const userSchema = new mongoose.Schema({
     typeId: {  // Added typeId field to store the numeric ID
         type: Number,
         enum: [1, 2, 3, 4, 5],
-        required: true,
-        required: true,
         validate: {
             validator: function (value) {
                 const typeMapping = {
