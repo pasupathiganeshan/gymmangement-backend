@@ -252,12 +252,6 @@
                     },
                     "type": {
                       "type": "string"
-                    },
-                    "userId": {
-                      "type": "number"
-                    },
-                    "typeId": {
-                      "type": "number"
                     }
                   }
                 },
@@ -606,7 +600,7 @@
         }
       }
     },
-    "/api/member/": {
+    "/member/": {
       "get": {
         "summary": "Retrieve all members",
         "tags": [
@@ -665,126 +659,7 @@
         }
       }
     },
-    "/api/member/{id}": {
-      "put": {
-        "summary": "Update a member's details",
-        "tags": [
-          "Members"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The unique identifier of the member to update"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Member"
-              },
-              "example": {
-                "name": "pasupathi",
-                "fatherOrHusbandName": "Michael Doe",
-                "dateOfBirth": "1990-01-01",
-                "gender": "Male",
-                "disease": "diabetes",
-                "address": "123 Main Street, City",
-                "cellNo": "1234567892",
-                "faxNo": "0987654321",
-                "package": "personaltrainer",
-                "packageduration": "6 months",
-                "time": "morning",
-                "registrationFee": "500",
-                "monthly": "1500",
-                "discount": "200",
-                "subtotal": "1300",
-                "tax": "100",
-                "grandtotal": "1800",
-                "amountpay": "1000",
-                "remaningBalance": "400",
-                "dateofissue": "2024-12-18",
-                "paymenttype": "cash",
-                "active": true
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Member updated successfully",
-            "content": {
-              "application/json": {
-                "example": {
-                  "message": "update successfully",
-                  "data": {
-                    "name": "pasupathi",
-                    "fatherOrHusbandName": "Michael Doe",
-                    "dateOfBirth": "1990-01-01",
-                    "gender": "Male",
-                    "disease": "diabetes",
-                    "address": "123 Main Street, City",
-                    "cellNo": "1234567892",
-                    "faxNo": "0987654321",
-                    "package": "personaltrainer",
-                    "packageduration": "6 months",
-                    "time": "morning",
-                    "registrationFee": "500",
-                    "monthly": "1500",
-                    "discount": "200",
-                    "subtotal": "1300",
-                    "tax": "100",
-                    "grandtotal": "1800",
-                    "amountpay": "1000",
-                    "remaningBalance": "400",
-                    "dateofissue": "2024-12-18",
-                    "paymenttype": "cash",
-                    "active": true
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request - Invalid data provided",
-            "content": {
-              "application/json": {
-                "example": {
-                  "error": "Invalid member data"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Member not found",
-            "content": {
-              "application/json": {
-                "example": {
-                  "error": "Member not found"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "error": "An unexpected error occurred"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/member/{id}": {
+    "/member/{id}": {
       "put": {
         "summary": "Update member details",
         "tags": [
