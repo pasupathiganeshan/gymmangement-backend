@@ -871,9 +871,9 @@
             "type": "string",
             "description": "The user's password (plain text for registration, to be hashed)"
           },
-          "address": {
+          "shift": {
             "type": "string",
-            "description": "The user's address"
+            "enum":"['Morning', 'evening']"
           },
           "access_level": {
             "type": "string",
