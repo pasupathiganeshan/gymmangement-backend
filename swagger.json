@@ -414,93 +414,93 @@
         }
       }
     },
-   "/api/package/{id}": {
-  "put": {
-    "summary": "Update a package",
-    "tags": [
-      "package"
-    ],
-    "parameters": [
-      {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "schema": {
-          "type": "string"
-        },
-        "description": "The unique identifier of the package to update"
-      }
-    ],
-    "requestBody": {
-      "required": true,
-      "content": {
-        "application/json": {
-          "schema": {
-            "$ref": "#/components/schemas/NewPackage"
-          },
-          "example": {
-            "packageItemName": "fullbodymassage",
-            "price": 1200,
-            "userId": 2,
-            "type": "theropyMassage",
-            "typeId": 3
+    "/api/package/{id}": {
+      "put": {
+        "summary": "Update a package",
+        "tags": [
+          "package"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the package to update"
           }
-        }
-      }
-    },
-    "responses": {
-      "200": {
-        "description": "Package updated successfully",
-        "content": {
-          "application/json": {
-            "example": {
-              "message": "update successfully",
-              "data": {
-                "_id": "676d3ca7b505905cf8fae5dd",
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPackage"
+              },
+              "example": {
                 "packageItemName": "fullbodymassage",
                 "price": 1200,
                 "userId": 2,
                 "type": "theropyMassage",
-                "typeId": 3,
-                "__v": 0
+                "typeId": 3
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Package updated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "update successfully",
+                  "data": {
+                    "_id": "676d3ca7b505905cf8fae5dd",
+                    "packageItemName": "fullbodymassage",
+                    "price": 1200,
+                    "userId": 2,
+                    "type": "theropyMassage",
+                    "typeId": 3,
+                    "__v": 0
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid data provided",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid package ID or data"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Package not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Package not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "An unexpected error occurred"
+                }
               }
             }
           }
         }
-      },
-      "400": {
-        "description": "Bad request - Invalid data provided",
-        "content": {
-          "application/json": {
-            "example": {
-              "error": "Invalid package ID or data"
-            }
-          }
-        }
-      },
-      "404": {
-        "description": "Package not found",
-        "content": {
-          "application/json": {
-            "example": {
-              "error": "Package not found"
-            }
-          }
-        }
-      },
-      "500": {
-        "description": "Internal server error",
-        "content": {
-          "application/json": {
-            "example": {
-              "error": "An unexpected error occurred"
-            }
-          }
-        }
       }
-    }
-  }
-},
+    },
     "/member/register/members": {
       "post": {
         "summary": "Register a new user",
@@ -606,7 +606,6 @@
         }
       }
     },
-    
     "/api/member/": {
       "get": {
         "summary": "Retrieve all members",
@@ -667,64 +666,30 @@
       }
     },
     "/api/member/{id}": {
-  "put": {
-    "summary": "Update a member's details",
-    "tags": [
-      "Members"
-    ],
-    "parameters": [
-      {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "schema": {
-          "type": "string"
-        },
-        "description": "The unique identifier of the member to update"
-      }
-    ],
-    "requestBody": {
-      "required": true,
-      "content": {
-        "application/json": {
-          "schema": {
-            "$ref": "#/components/schemas/Member"
-          },
-          "example": {
-            "name": "pasupathi",
-            "fatherOrHusbandName": "Michael Doe",
-            "dateOfBirth": "1990-01-01",
-            "gender": "Male",
-            "disease": "diabetes",
-            "address": "123 Main Street, City",
-            "cellNo": "1234567892",
-            "faxNo": "0987654321",
-            "package": "personaltrainer",
-            "packageduration": "6 months",
-            "time": "morning",
-            "registrationFee": "500",
-            "monthly": "1500",
-            "discount": "200",
-            "subtotal": "1300",
-            "tax": "100",
-            "grandtotal": "1800",
-            "amountpay": "1000",
-            "remaningBalance": "400",
-            "dateofissue": "2024-12-18",
-            "paymenttype": "cash",
-            "active": true
+      "put": {
+        "summary": "Update a member's details",
+        "tags": [
+          "Members"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the member to update"
           }
-        }
-      }
-    },
-    "responses": {
-      "200": {
-        "description": "Member updated successfully",
-        "content": {
-          "application/json": {
-            "example": {
-              "message": "update successfully",
-              "data": {
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Member"
+              },
+              "example": {
                 "name": "pasupathi",
                 "fatherOrHusbandName": "Michael Doe",
                 "dateOfBirth": "1990-01-01",
@@ -750,42 +715,314 @@
               }
             }
           }
-        }
-      },
-      "400": {
-        "description": "Bad request - Invalid data provided",
-        "content": {
-          "application/json": {
-            "example": {
-              "error": "Invalid member data"
+        },
+        "responses": {
+          "200": {
+            "description": "Member updated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "update successfully",
+                  "data": {
+                    "name": "pasupathi",
+                    "fatherOrHusbandName": "Michael Doe",
+                    "dateOfBirth": "1990-01-01",
+                    "gender": "Male",
+                    "disease": "diabetes",
+                    "address": "123 Main Street, City",
+                    "cellNo": "1234567892",
+                    "faxNo": "0987654321",
+                    "package": "personaltrainer",
+                    "packageduration": "6 months",
+                    "time": "morning",
+                    "registrationFee": "500",
+                    "monthly": "1500",
+                    "discount": "200",
+                    "subtotal": "1300",
+                    "tax": "100",
+                    "grandtotal": "1800",
+                    "amountpay": "1000",
+                    "remaningBalance": "400",
+                    "dateofissue": "2024-12-18",
+                    "paymenttype": "cash",
+                    "active": true
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid data provided",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid member data"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Member not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Member not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "An unexpected error occurred"
+                }
+              }
             }
           }
         }
-      },
-      "404": {
-        "description": "Member not found",
-        "content": {
-          "application/json": {
-            "example": {
-              "error": "Member not found"
+      }
+    },
+    "/api/member/{id}": {
+      "put": {
+        "summary": "Update member details",
+        "tags": [
+          "Members"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the member to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMember"
+              },
+              "example": {
+                "name": "pasupathi",
+                "fatherOrHusbandName": "Michael Doe",
+                "dateOfBirth": "1990-01-01",
+                "gender": "Male",
+                "disease": "diabetes",
+                "address": "123 Main Street, City",
+                "cellNo": "1234567892",
+                "faxNo": "0987654321",
+                "package": "personaltrainer",
+                "packageduration": "6 months",
+                "time": "morning",
+                "registrationFee": "500",
+                "monthly": "1500",
+                "discount": "200",
+                "subtotal": "1300",
+                "tax": "100",
+                "grandtotal": "1800",
+                "amountpay": "1000",
+                "remaningBalance": "400",
+                "dateofissue": "2024-12-18",
+                "paymenttype": "cash",
+                "active": "true"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Member updated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "update successfully",
+                  "data": {
+                    "name": "pasupathi",
+                    "fatherOrHusbandName": "Michael Doe",
+                    "dateOfBirth": "1990-01-01",
+                    "gender": "Male",
+                    "disease": "diabetes",
+                    "address": "123 Main Street, City",
+                    "cellNo": "1234567892",
+                    "faxNo": "0987654321",
+                    "package": "personaltrainer",
+                    "packageduration": "6 months",
+                    "time": "morning",
+                    "registrationFee": "500",
+                    "monthly": "1500",
+                    "discount": "200",
+                    "subtotal": "1300",
+                    "tax": "100",
+                    "grandtotal": "1800",
+                    "amountpay": "1000",
+                    "remaningBalance": "400",
+                    "dateofissue": "2024-12-18",
+                    "paymenttype": "cash",
+                    "active": "true"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid data provided",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid member data"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Member not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Member not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "An unexpected error occurred"
+                }
+              }
             }
           }
         }
-      },
-      "500": {
-        "description": "Internal server error",
-        "content": {
-          "application/json": {
-            "example": {
-              "error": "An unexpected error occurred"
+      }
+    },
+    "/{id}": {
+      "delete": {
+        "summary": "Delete a member",
+        "tags": [
+          "Members"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the member to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member deleted successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Member deleted successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid member ID",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid member ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Member not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Member not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "An unexpected error occurred"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/member/members-with-packages": {
+      "get": {
+        "summary": "Get members with package details",
+        "tags": [
+          "Members"
+        ],
+        "description": "Fetch a list of members along with their package details by joining two tables.",
+        "responses": {
+          "200": {
+            "description": "Members with package details fetched successfully",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "_id": "676514e6cfeeb39af1bf9a08",
+                    "name": "pasu",
+                    "package": "personaltrainer",
+                    "amountpay": "1000",
+                    "tax": "100",
+                    "grandtotal": "1600",
+                    "remainingBalance": 600
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid parameters",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid request"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No members or packages found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "No data found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "An unexpected error occurred"
+                }
+              }
             }
           }
         }
       }
     }
-  }
-}
-
   },
   "components": {
     "schemas": {
@@ -873,7 +1110,7 @@
           },
           "shift": {
             "type": "string",
-            "enum":"['Morning', 'evening']"
+            "enum": "['Morning', 'evening']"
           },
           "access_level": {
             "type": "string",
