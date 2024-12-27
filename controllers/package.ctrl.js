@@ -4,7 +4,7 @@ const logger = require("../logger");
 const packageService = require("../services/package.serv");
 const Package = require("../model/package.model")
 const mongoose = require('mongoose');
-const  logAction = require('../services/logs.serv')
+const logAction = require('../services/logs.serv')
 
 exports.registerPackage = async (req, res, next) => {
   const body = req.body;
@@ -16,18 +16,18 @@ exports.registerPackage = async (req, res, next) => {
   body._id = customId;
   body.createBy = req.package_id;
   body.updatedBy = req.package_id;
-  if (!body.packageItemName || !body.price || !body.type || !body.typeId || !body.userId) {
+  if (!body.packageItemName || !body.price || !body.type) {
     return res.status(400).json({ message: "Please provide all require fields" });
   }
   try {
     let newPackage = await packageService.packagecreater(body);
     newPackage = newPackage.toJSON();
     res.status(201).json({ data: newPackage, message: "package item  successful" });
-    
+
     await logAction({
-      type:'package',
-      operation:'insert',
-      remark : 'package was added'
+      type: 'package',
+      operation: 'insert',
+      remark: 'package was added'
     });
   }
   catch (error) {
@@ -61,7 +61,7 @@ exports.getAllPackages = async (req, res, next) => {
 
 exports.updatePackageById = async (req, res, next) => {
   const { id } = req.params;
-  const {name}= req.body;
+  const { name } = req.body;
   const body = req.body;
   body.createdBy = req.package_id;
   body.updatedBy = req.package_id;
@@ -74,11 +74,11 @@ exports.updatePackageById = async (req, res, next) => {
     res
       .status(200)
       .json({ data: updatePackage, message: "update successfully" });
-      await logAction({
-        type:'workoutpackage',
-        operation:'update',
-        remark : 'package was updated'
-      });
+    await logAction({
+      type: 'workoutpackage',
+      operation: 'update',
+      remark: 'package was updated'
+    });
   } catch (error) {
     next(error);
   }
@@ -170,23 +170,23 @@ exports.getById = async (req, res, next) => {
     });
   }
 };
-exports.deletePackageById = async (req,res,next)=>{
-  const {id} = req.params;
-  const {name}= req.body;
-  try{
+exports.deletePackageById = async (req, res, next) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  try {
     const deletePackage = await packageService.deletePackageById(id);
-    if(!deletePackage){
-      return res.status(404).json({message:"package not found"})
+    if (!deletePackage) {
+      return res.status(404).json({ message: "package not found" })
     }
-    
-    res.status(200).send({message:"package deleted successfully"})
-   
+
+    res.status(200).send({ message: "package deleted successfully" })
+
     await logAction({
-      type:'workoutpackage',
-      operation:'delete',
-      remark :"package was deleted"
+      type: 'workoutpackage',
+      operation: 'delete',
+      remark: "package was deleted"
     });
-  }catch(error){
+  } catch (error) {
     next(error);
   }
 }
