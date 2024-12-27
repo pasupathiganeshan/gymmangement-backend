@@ -23,24 +23,26 @@ const userSchema = new mongoose.Schema({
     },
     typeId: {  // Added typeId field to store the numeric ID
         type: Number,
-        enum: [1, 2, 3, 4, 5],
-        validate: {
-            validator: function (value) {
-                const typeMapping = {
-                    daily: 1,
-                    monthly: 2,
-                    theropyMassage: 3,
-                    workoutPlan: 4,
-                    juicebar: 5,
-                };
-                return typeMapping[this.type] === value;
+        enum: [1, 2, 3, 4, 5]
             },
 
-        }
-
-    }
-});
-
+        });
+        userSchema.pre('save', function (next) {
+            const typeMapping = {
+                daily: 1,
+                monthly: 2,
+                theropyMassage: 3,
+                workoutPlan: 4,
+                juicebar: 5,
+            };
+        
+            // Automatically set typeId based on the type
+            if (this.type) {
+                this.typeId = typeMapping[this.type];
+            }
+            next();
+        });
+        
 const Package = mongoose.model("Package", userSchema);
 
 module.exports = Package;
