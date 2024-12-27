@@ -1,0 +1,1105 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Parking API Documentation",
+    "version": "1.0.0",
+    "description": " API documentation for your Express application"
+  },
+  "servers": [
+    {
+      "url": "/api",
+      "description": "API server"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/auth/registers": {
+      "get": {
+        "summary": "Fetch registration details",
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Registration details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The user ID"
+                    },
+                    "firstname": {
+                      "type": "string",
+                      "description": "The user's first name"
+                    },
+                    "lastname": {
+                      "type": "string",
+                      "description": "The user's last name"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "The user's email address"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "12345",
+                  "firstname": "John",
+                  "lastname": "Doe",
+                  "email": "johndoe@example.com"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (e.g., missing or invalid parameters)"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login a user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "The user's email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "The user's password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "auth/{id}": {
+      "delete": {
+        "summary": "Delete a user by ID",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the user to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          },
+          "400": {
+            "description": "Bad request (e.g., invalid ID format)"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/package": {
+      "post": {
+        "summary": "Create a new Package",
+        "tags": [
+          "package"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPackage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Customers created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/package"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Fetch package details",
+        "tags": [
+          "package"
+        ],
+        "responses": {
+          "200": {
+            "description": "Registration details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "packageItemName": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "userId": {
+                      "type": "number"
+                    },
+                    "typeId": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "example": {
+                  "packageItemName": "fullbodymassage",
+                  "price": "237.00",
+                  "userId": "1",
+                  "type": "daily",
+                  "typeId": "2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (e.g., missing or invalid parameters)"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/package/offers/{typeId}": {
+      "get": {
+        "summary": "Get package offers by user ID",
+        "tags": [
+          "package"
+        ],
+        "parameters": [
+          {
+            "name": "typeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "The user ID to retrieve package offers"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Package offers retrieved successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Package offers not found"
+          }
+        }
+      }
+    },
+    "/package/users": {
+      "get": {
+        "summary": "Retrieve packages for a specific user",
+        "tags": [
+          "package"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "The ID of the user to retrieve packages for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with the list of packages"
+          },
+          "400": {
+            "description": "Bad request (e.g., missing or invalid userId)"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/package/user": {
+      "get": {
+        "summary": "Retrieve packages for a specific user",
+        "tags": [
+          "package"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "typeId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "the id of the user to retrieve packages for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with the list of packages"
+          },
+          "400": {
+            "description": "Bad request (e.g., missing or invalid userId)"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/package/{id}": {
+      "delete": {
+        "summary": "Delete a user by ID",
+        "tags": [
+          "package"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the user to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          },
+          "400": {
+            "description": "Bad request (e.g., invalid ID format)"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+   "/api/package/{id}": {
+  "put": {
+    "summary": "Update a package",
+    "tags": [
+      "package"
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The unique identifier of the package to update"
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/NewPackage"
+          },
+          "example": {
+            "packageItemName": "fullbodymassage",
+            "price": 1200,
+            "userId": 2,
+            "type": "theropyMassage",
+            "typeId": 3
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Package updated successfully",
+        "content": {
+          "application/json": {
+            "example": {
+              "message": "update successfully",
+              "data": {
+                "_id": "676d3ca7b505905cf8fae5dd",
+                "packageItemName": "fullbodymassage",
+                "price": 1200,
+                "userId": 2,
+                "type": "theropyMassage",
+                "typeId": 3,
+                "__v": 0
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request - Invalid data provided",
+        "content": {
+          "application/json": {
+            "example": {
+              "error": "Invalid package ID or data"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Package not found",
+        "content": {
+          "application/json": {
+            "example": {
+              "error": "Package not found"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "example": {
+              "error": "An unexpected error occurred"
+            }
+          }
+        }
+      }
+    }
+  }
+},
+    "/member/register/members": {
+      "post": {
+        "summary": "Register a new user",
+        "tags": [
+          "Members"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewMembers"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Members"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/member/members-by-active": {
+      "get": {
+        "summary": "Get members by active status",
+        "tags": [
+          "Members"
+        ],
+        "parameters": [
+          {
+            "name": "active",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Filter members by their active status (true or false)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of members with the specified active status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Members"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "676d2baf172447fc2862afd3",
+                    "membershipNo": "MEM101",
+                    "name": "John Doe",
+                    "active": true,
+                    "createdAt": "2024-12-26T10:15:30Z",
+                    "updatedAt": "2024-12-26T10:15:30Z"
+                  },
+                  {
+                    "id": "676d2baf172447fc2862afd4",
+                    "membershipNo": "MEM102",
+                    "name": "Jane Smith",
+                    "active": true,
+                    "createdAt": "2024-12-26T10:20:00Z",
+                    "updatedAt": "2024-12-26T10:20:00Z"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid parameter value",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid value for 'active' parameter"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No members found with the specified active status",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "No members found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    
+    "/api/member/": {
+      "get": {
+        "summary": "Retrieve all members",
+        "tags": [
+          "Members"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all members",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Members"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "676d2baf172447fc2862afd3",
+                    "membershipNo": "MEM101",
+                    "name": "John Doe",
+                    "email": "johndoe@example.com",
+                    "phone": "1234567890",
+                    "address": "123 Main Street",
+                    "gender": "Male",
+                    "dateOfBirth": "1990-01-01",
+                    "createdAt": "2024-12-26T10:15:30Z",
+                    "updatedAt": "2024-12-26T10:15:30Z"
+                  },
+                  {
+                    "id": "676d2baf172447fc2862afd4",
+                    "membershipNo": "MEM102",
+                    "name": "Jane Smith",
+                    "email": "janesmith@example.com",
+                    "phone": "0987654321",
+                    "address": "456 Elm Street",
+                    "gender": "Female",
+                    "dateOfBirth": "1995-05-15",
+                    "createdAt": "2024-12-26T10:20:00Z",
+                    "updatedAt": "2024-12-26T10:20:00Z"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Unexpected error occurred"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/member/{id}": {
+  "put": {
+    "summary": "Update a member's details",
+    "tags": [
+      "Members"
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The unique identifier of the member to update"
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/Member"
+          },
+          "example": {
+            "name": "pasupathi",
+            "fatherOrHusbandName": "Michael Doe",
+            "dateOfBirth": "1990-01-01",
+            "gender": "Male",
+            "disease": "diabetes",
+            "address": "123 Main Street, City",
+            "cellNo": "1234567892",
+            "faxNo": "0987654321",
+            "package": "personaltrainer",
+            "packageduration": "6 months",
+            "time": "morning",
+            "registrationFee": "500",
+            "monthly": "1500",
+            "discount": "200",
+            "subtotal": "1300",
+            "tax": "100",
+            "grandtotal": "1800",
+            "amountpay": "1000",
+            "remaningBalance": "400",
+            "dateofissue": "2024-12-18",
+            "paymenttype": "cash",
+            "active": true
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Member updated successfully",
+        "content": {
+          "application/json": {
+            "example": {
+              "message": "update successfully",
+              "data": {
+                "name": "pasupathi",
+                "fatherOrHusbandName": "Michael Doe",
+                "dateOfBirth": "1990-01-01",
+                "gender": "Male",
+                "disease": "diabetes",
+                "address": "123 Main Street, City",
+                "cellNo": "1234567892",
+                "faxNo": "0987654321",
+                "package": "personaltrainer",
+                "packageduration": "6 months",
+                "time": "morning",
+                "registrationFee": "500",
+                "monthly": "1500",
+                "discount": "200",
+                "subtotal": "1300",
+                "tax": "100",
+                "grandtotal": "1800",
+                "amountpay": "1000",
+                "remaningBalance": "400",
+                "dateofissue": "2024-12-18",
+                "paymenttype": "cash",
+                "active": true
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request - Invalid data provided",
+        "content": {
+          "application/json": {
+            "example": {
+              "error": "Invalid member data"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Member not found",
+        "content": {
+          "application/json": {
+            "example": {
+              "error": "Member not found"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "example": {
+              "error": "An unexpected error occurred"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "description": "The user's name"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "The user's email"
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password (plain text for registration, to be hashed)"
+          },
+          "address": {
+            "type": "string",
+            "description": "The user's address"
+          },
+          "access_level": {
+            "type": "string",
+            "enum": [
+              "Admin(Full)",
+              "Receptionist(moderate)"
+            ],
+            "description": "The user's role"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "objectId",
+            "description": "User who created the record"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "objectId",
+            "description": "User who last updated the record"
+          },
+          "isBlocked": {
+            "type": "boolean",
+            "default": false
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "name",
+          "email"
+        ]
+      },
+      "NewUser": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "description": "The user's name"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "The user's email"
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password (plain text for registration, to be hashed)"
+          },
+          "address": {
+            "type": "string",
+            "description": "The user's address"
+          },
+          "access_level": {
+            "type": "string",
+            "enum": [
+              "Admin(Full)",
+              "Receptionist(moderate)"
+            ],
+            "description": "The user's role"
+          }
+        }
+      },
+      "package": {
+        "type": "object",
+        "properties": {
+          "packageItemName": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "typeId": {
+            "type": "number"
+          }
+        }
+      },
+      "NewPackage": {
+        "type": "object",
+        "properties": {
+          "packageItemName": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "typeId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "packageItemName",
+          "price",
+          "userId",
+          "type",
+          "typeId"
+        ]
+      },
+      "Members": {
+        "type": "object",
+        "properties": {
+          "membershipNo": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "fatherOrHusbandName": {
+            "type": "string"
+          },
+          "dateOfBirth": {
+            "type": "date"
+          },
+          "identityCardNo": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string",
+            "enum": "['Male', 'Female', 'Other']"
+          },
+          "disease": {
+            "type": "string",
+            "enum": "['blepresure', 'heartdesecies', 'diabetes', 'asthuma', 'hepatitas']"
+          },
+          "address": {
+            "type": "string"
+          },
+          "cellNo": {
+            "type": "string"
+          },
+          "faxNo": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "package": {
+            "type": "string"
+          },
+          "packageduration": {
+            "type": "string",
+            "enum": "['6 months', '1 months', '12 months']"
+          },
+          "time": {
+            "type": "string"
+          },
+          "registrationFee": {
+            "type": "string"
+          },
+          "monthly": {
+            "type": "string"
+          },
+          "discount": {
+            "type": "string"
+          },
+          "subtotal": {
+            "type": "string"
+          },
+          "tax": {
+            "type": "string"
+          },
+          "grandtotal": {
+            "type": "string"
+          },
+          "amountpay": {
+            "type": "string"
+          },
+          "remaningBalance": {
+            "type": "string"
+          },
+          "dateofissue": {
+            "type": "string"
+          },
+          "paymenttype": {
+            "type": "string",
+            "enum": "['cash', 'creditcard', 'cheque']"
+          },
+          "active": {
+            "type": "boolean"
+          }
+        }
+      },
+      "NewMembers": {
+        "type": "object",
+        "properties": {
+          "membershipNo": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "fatherOrHusbandName": {
+            "type": "string"
+          },
+          "dateOfBirth": {
+            "type": "date"
+          },
+          "identityCardNo": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string",
+            "enum": "['Male', 'Female', 'Other']"
+          },
+          "disease": {
+            "type": "string",
+            "enum": "['blepresure', 'heartdesecies', 'diabetes', 'asthuma', 'hepatitas']"
+          },
+          "address": {
+            "type": "string"
+          },
+          "cellNo": {
+            "type": "string"
+          },
+          "faxNo": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "package": {
+            "type": "string"
+          },
+          "packageduration": {
+            "type": "string",
+            "enum": "['6 months', '1 months', '12 months']"
+          },
+          "time": {
+            "type": "string"
+          },
+          "registrationFee": {
+            "type": "string"
+          },
+          "monthly": {
+            "type": "string"
+          },
+          "discount": {
+            "type": "string"
+          },
+          "subtotal": {
+            "type": "string"
+          },
+          "tax": {
+            "type": "string"
+          },
+          "grandtotal": {
+            "type": "string"
+          },
+          "amountpay": {
+            "type": "string"
+          },
+          "remaningBalance": {
+            "type": "string"
+          },
+          "dateofissue": {
+            "type": "string"
+          },
+          "paymenttype": {
+            "type": "string",
+            "enum": "['cash', 'creditcard', 'cheque']"
+          },
+          "active": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
