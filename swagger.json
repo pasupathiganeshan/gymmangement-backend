@@ -258,9 +258,7 @@
                 "example": {
                   "packageItemName": "fullbodymassage",
                   "price": "237.00",
-                  "userId": "1",
-                  "type": "daily",
-                  "typeId": "2"
+                  "type": "daily"
                 }
               }
             }
