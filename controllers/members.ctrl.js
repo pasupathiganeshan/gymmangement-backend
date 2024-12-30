@@ -24,8 +24,7 @@ exports.regMember = async (req, res, next) => {
     'faxNo',
     'email',
     'package',
-    'packageDuration',
-    'active'
+    'packageDuration'
   ];
 
   // Check if any required field is missing

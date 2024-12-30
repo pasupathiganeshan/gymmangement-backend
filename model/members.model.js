@@ -113,8 +113,7 @@ const MembershipSchema = new mongoose.Schema({
 
   },
   active: {
-    type: Boolean,
-    default: true, // Default to active
+    type: Boolean
   },
 
 }, { timestamps: true });
