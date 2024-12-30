@@ -26,7 +26,7 @@ exports.registerUser = async (req, res, next) => {
         await logAction({
           type:'workout',
           operation:'add',
-          remark :`user wast added ${name}`
+          remark :`user wast added  `
         });
     } catch (error) {
         next(error);
@@ -138,4 +138,14 @@ exports.deleteUserById = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+};
+exports.updatePassword = async (req, res,next) => {
+  const { email, oldPassword, newPassword } = req.body;
+
+  try {
+    const result = await userService.updatePassword(email,oldPassword, newPassword);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };

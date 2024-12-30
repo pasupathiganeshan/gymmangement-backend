@@ -21,11 +21,12 @@ const createDefaultUser = async () => {
             access_level: "Admin(Full)",
         });
         if (!user) {
+            const hashedPassword = await bcrypt.hash('gymworkout123', 10);
             let newUser = new User({
                 firstname: "Super Admin",
                 lastname: "Makvishon",
                 email: "gymworkout@gmail.com",
-                password: " gymworkout123",
+                password: hashedPassword,
                 shift: "Morning",
                 access_level: "Admin(Full)",
                 createdBy: "667507a9777fb78e952ccfb2",

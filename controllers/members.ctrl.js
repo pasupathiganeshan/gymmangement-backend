@@ -24,7 +24,7 @@ exports.regMember = async (req, res, next) => {
     'faxNo',
     'email',
     'package',
-    'packageduration',
+    'packageDuration',
     'active'
   ];
 

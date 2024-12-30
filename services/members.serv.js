@@ -49,8 +49,8 @@ exports.getMembersWithPackageDetails = async () => {
             package: 1,                             
             type: "$packageDetails.type",           
             tax: "$tax",            
-            grandtotal: "$grandtotal", 
-            amountpay: 1,                          
+            grandTotal: "$grandTotal", 
+            amountPay: 1,                          
             remainingBalance: {
               $subtract: [
                 { $toDouble: "$grandtotal" },

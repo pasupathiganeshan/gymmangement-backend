@@ -62,7 +62,7 @@ const MembershipSchema = new mongoose.Schema({
     enum: ['aerobatices/yoga', 'gynasinum', 'zumba', 'personaltrainer', 'testgym', 'cardio'],
     required: true
   },
-  packageduration: {
+  packageDuration: {
     type: String,
     enum: ['6 months', '1 months', '12 months'],
   },
@@ -83,7 +83,7 @@ const MembershipSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  subtotal: {
+  subTotal: {
     type: String,
     required: true,
   },
@@ -91,11 +91,11 @@ const MembershipSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  grandtotal: {
+  grandTotal: {
     type: String,
     required: true,
   },
-  amountpay: {
+  amountPay: {
     type: String,
     required: true,
   },
@@ -103,11 +103,11 @@ const MembershipSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  dateofissue: {
+  dateofIssue: {
     type: Date,
     required: true,
   },
-  paymenttype: {
+  paymentType: {
     type: String,
     enum: ['cash', 'creditcard', 'cheque'],
 
