@@ -25,7 +25,7 @@ exports.registerPackage = async (req, res, next) => {
     res.status(201).json({ data: newPackage, message: "package item  successful" });
 
     await logAction({
-      type: 'package',
+      type: 'workoutpackage',
       operation: 'insert',
       remark: 'package was added'
     });

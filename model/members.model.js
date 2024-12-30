@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { string } = require('yup');
 
 // Define Membership Schema
 const MembershipSchema = new mongoose.Schema({
@@ -33,6 +34,10 @@ const MembershipSchema = new mongoose.Schema({
     type: String,
     enum: ['blepresure', 'heartdesecies', 'diabetes', 'asthuma', 'hepatitas'],
     required: true,
+  },
+  residentOf:{
+    type:String,
+    required:true,
   },
   address: {
     type: String,
