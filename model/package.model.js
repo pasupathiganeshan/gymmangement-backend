@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 const { number } = require('yup');
+const autoIncrement = require('mongoose-sequence')(mongoose);
+
 const userSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: mongoose.Types.ObjectId // Ensure that ObjectId is used by default
-    },
     packageItemName: {
         type: String,
         required: true,
@@ -13,8 +11,12 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    userId:{
-        type:Number
+    adminId: {
+        type: Number,
+        allowNull: false, // Assuming every package must have an adminId
+    },
+    userId: {
+        type: Number
     },
     type: {
         type: String,
@@ -24,25 +26,26 @@ const userSchema = new mongoose.Schema({
     typeId: {  // Added typeId field to store the numeric ID
         type: Number,
         enum: [1, 2, 3, 4, 5]
-            },
+    },
 
-        });
-        userSchema.pre('save', function (next) {
-            const typeMapping = {
-                daily: 1,
-                monthly: 2,
-                theropyMassage: 3,
-                workoutPlan: 4,
-                juicebar: 5,
-            };
-        
-            // Automatically set typeId based on the type
-            if (this.type) {
-                this.typeId = typeMapping[this.type];
-            }
-            next();
-        });
-        
+});
+userSchema.pre('save', function (next) {
+    const typeMapping = {
+        daily: 1,
+        monthly: 2,
+        theropyMassage: 3,
+        workoutPlan: 4,
+        juicebar: 5,
+    };
+
+    // Automatically set typeId based on the type
+    if (this.type) {
+        this.typeId = typeMapping[this.type];
+    }
+    next();
+});
+userSchema.plugin(autoIncrement, { inc_field: 'adminId' });
+
 const Package = mongoose.model("Package", userSchema);
 
 module.exports = Package;

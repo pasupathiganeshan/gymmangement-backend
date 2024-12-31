@@ -9,11 +9,6 @@ const logAction = require('../services/logs.serv')
 exports.registerPackage = async (req, res, next) => {
   const body = req.body;
 
-  // Correctly create a new ObjectId
-  const customId = new mongoose.Types.ObjectId();
-
-  // Assign custom ObjectId to the document
-  body._id = customId;
   body.createBy = req.package_id;
   body.updatedBy = req.package_id;
   if (!body.packageItemName || !body.price || !body.type) {
