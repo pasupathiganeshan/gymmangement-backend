@@ -13,17 +13,15 @@ exports.memberscreater = async (membersData) => {
     }
 }
 // Get All members
-exports.getAllMembers = async (params) => {
-    try {
-        let query = Members.find();
-        query = queryParserUtil.parseQuery(query, params);
-        return await query.exec();
-    } catch (error) {
-        throw new Error(error);
-    }
-};
-exports.findMembers = async (filter) => {
-    return Members.find(filter);
+exports.getAllMembers = async (filter) => {
+  try {
+    // Fetch members from the database based on the filter provided
+    const members = await Members.find(filter); // For Sequelize: Member.findAll({ where: filter })
+    return members;
+  } catch (error) {
+    console.error("Error fetching members:", error);
+    throw error; // Throw error to be caught in controller
+  }
 };
 // services/membersService.js
 exports.getMembersWithPackageDetails = async () => {

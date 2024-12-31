@@ -103,7 +103,7 @@ const MembershipSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  dateofIssue: {
+  dateOfIssue: {
     type: Date,
     required: true,
   },

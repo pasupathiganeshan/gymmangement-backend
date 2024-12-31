@@ -24,7 +24,9 @@ exports.regMember = async (req, res, next) => {
     'faxNo',
     'email',
     'package',
-    'packageDuration'
+    'packageDuration',
+    'dateOfIssue'
+    
   ];
 
   // Check if any required field is missing
@@ -51,71 +53,80 @@ exports.regMember = async (req, res, next) => {
   }
 };
 //Get all Customer
-exports.getAllMembers = async (req, res, next) => {
+exports.getAllMembersWithSeparateTables = async (req, res) => {
   try {
-    const members = await memberService.getAllMembers(req.query);
-    const filteredMembers = members.map(member => ({
-      membershipNo: member.membershipNo, 
-      name: member.name,
-      contact: member.cellNo,           
-      active: member.active,
-      enddate: member.dateofissue,      
-    }));
-    res.status(200).json({ data: filteredMembers, message: "Success" });
-  } catch (error) {
-    next(error);
-  }
-};
-exports.getMembersByActiveStatus = async (req, res) => {
-  try {
-    // Retrieve the 'active' query parameter
+    // Retrieve query parameters for filtering
     const { active } = req.query;
 
-    // Validate the active query parameter
-    if (active === undefined) {
-      return res.status(400).json({
-        success: false,
-        message: "Please provide the 'active' query parameter (true or false).",
-      });
+    let filter = {};
+
+    // Add filtering for 'active' status if provided
+    if (active !== undefined) {
+      const isActive = active === "true" ? true : active === "false" ? false : null;
+
+      if (isActive === null) {
+        return res.status(400).json({
+          success: false,
+          message: "'active' query parameter must be either 'true' or 'false'.",
+        });
+      }
+
+      filter.active = isActive; // Add 'active' status to the filter
     }
 
-    // Convert active to boolean for query
-    const isActive = active === "true" ? true : active === "false" ? false : null;
-
-    if (isActive === null) {
-      return res.status(400).json({
-        success: false,
-        message: "'active' query parameter must be either 'true' or 'false'.",
-      });
-    }
-
-    // Fetch members based on the active status with selected fields
-    const members = await memberService.findMembers({ active: isActive });
+    // Fetch members based on the filter
+    const members = await memberService.getAllMembers(filter);
 
     if (members.length === 0) {
       return res.status(404).json({
         success: false,
-        message: `No members found with active = ${active}.`,
+        message: `No members found with the given criteria.`,
       });
     }
 
-   
-    const filteredMembers = members.map(member => ({
-      name: member.name,
-      address: member.address,       
-      status: member.active,         
-      startdate: member.dateofissue,       
-      fees: member.paymenttype,              
+    // Split members into active and inactive
+    const activeMembers = members.filter(member => member.active === true);
+    const inactiveMembers = members.filter(member => member.active === false);
+
+    // Calculate total count of all members (active + inactive)
+    const totalMembers = members.length; // Total count of all members regardless of status
+
+    // Format the data for active and inactive members
+    const activeMembersTable = activeMembers.map(member => ({
+      membershipNo: member.membershipNo || null,
+      name: member.name || null,
+      contact: member.cellNo || null,
+      enddate: member.dateOfIssue || null,
+      status: "Active" // Add status field to indicate if member is active
     }));
 
-   
+    const inactiveMembersTable = inactiveMembers.map(member => ({
+      membershipNo: member.membershipNo || null,
+      name: member.name || null,
+      contact: member.cellNo || null,
+      enddate: member.dateOfIssue || null,
+      status: "Inactive" // Add status field to indicate if member is inactive
+    }));
+
+    // Combine active and inactive members into one list with an 'activeStatus' field
+    const totalMembersTable = members.map(member => ({
+      membershipNo: member.membershipNo || null,
+      name: member.name || null,
+      contact: member.cellNo || null,
+      enddate: member.dateOfIssue || null,
+      status: member.active ? "Active" : "Inactive" // Add status field to indicate if member is active or inactive
+    }));
+
+    // Return response with the total count of all members, and combined data for all members
     res.status(200).json({
       success: true,
-      data: filteredMembers,
-      message: `Members with active = ${active} fetched successfully.`,
+      activeMembers: activeMembersTable, // Active members list
+      inactiveMembers: inactiveMembersTable, // Inactive members list
+      totalMembersTable: totalMembersTable,  // Combined data for all members
+      message: "Members fetched successfully.",
     });
   } catch (error) {
-    console.error("Error fetching members by active status:", error);
+    console.error("Error fetching members:", error);
     res.status(500).json({
       success: false,
       message: "An error occurred while fetching members.",
@@ -123,6 +134,8 @@ exports.getMembersByActiveStatus = async (req, res) => {
     });
   }
 };
+
+
 
 exports.getMembersWithPackageDetails = async (req, res) => {
   try {

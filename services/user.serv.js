@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/user.model");
 const config = require("../config");
 const queryParserUtil = require("../utill/queryParser.util");
-
 exports.authCreate = async (userData) => {
   try {
     const { firstname, lastname, email, password, access_level, shift } =
