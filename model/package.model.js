@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     },
     adminId: {
         type: Number,
-        allowNull: false, // Assuming every package must have an adminId
+        allowNull: false, 
     },
     userId: {
         type: Number
