@@ -103,7 +103,7 @@ exports.getAllMembersWithSeparateTables = async (req, res) => {
     }));
 
     const inactiveMembersTable = inactiveMembers.map(member => ({
-      membershipNo: member.membershipNo || null,
+      membershipNo: member.membershipNo,
       name: member.name || null,
       contact: member.cellNo || null,
       enddate: member.dateOfIssue || null,
