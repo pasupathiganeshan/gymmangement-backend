@@ -1,6 +1,6 @@
 const Members = require("../model/members.model")
 const queryParserUtil = require("../utill/queryParser.util");
-
+const mongoose = require('mongoose');
 
 exports.memberscreater = async (membersData) => {
     try {
@@ -34,32 +34,40 @@ exports.getMemberById = async (id) => {
   }
 };
 
-// services/membersService.js
-exports.getMembersWithPackageDetails = async () => {
-    try {
-      const membersWithPackageDetails = await Members.aggregate([
+
+
+exports.getMemberById = async (id) => {
+  try {
+    // Ensure the ID is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id) && id !== "members-with-packages") {
+      throw new Error("Invalid member ID format");
+    }
+
+    if (id === "members-with-packages") {
+      // Handle specific case for retrieving members with package details
+      return await Members.aggregate([
         {
           $lookup: {
-            from: "packages",             
-            localField: "package",       
-            foreignField: "packageItemName", 
-            as: "pasu",         
+            from: "packages",
+            localField: "package",
+            foreignField: "packageItemName",
+            as: "pasu",
           },
         },
         {
           $unwind: {
-            path: "$packageDetails",   
-            preserveNullAndEmptyArrays: true,  
+            path: "$packageDetails",
+            preserveNullAndEmptyArrays: true,
           },
         },
         {
           $project: {
-            name: 1,                              
-            package: 1,                             
-            type: "items/juice",           
-            tax: "$tax",            
-            grandTotal: "$grandTotal", 
-            amountPay: 1,                          
+            name: 1,
+            package: 1,
+            type: "items/juice",
+            tax: "$tax",
+            grandTotal: "$grandTotal",
+            amountPay: 1,
             remainingBalance: {
               $subtract: [
                 { $toDouble: "$grandTotal" },
@@ -69,13 +77,15 @@ exports.getMembersWithPackageDetails = async () => {
           },
         },
       ]);
-      console.log(membersWithPackageDetails)
-      return membersWithPackageDetails;
-    } catch (error) { 
-      console.error("Error fetching members with package details:", error);  
-      throw new Error(error.message); 
     }
-  };
+
+    // If ID is a valid ObjectId, fetch the member by that ID
+    return await Members.findById(id);
+  } catch (error) {
+    throw new Error(`Error fetching member: ${error.message}`);
+  }
+};
+
 exports.deletedMemberById = async (memberId)=>{
   try{
     return await Members.findByIdAndDelete(memberId);

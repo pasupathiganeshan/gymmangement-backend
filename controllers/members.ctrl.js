@@ -165,6 +165,7 @@ exports.getMemberById = async (req, res, next) => {
 };
 
 
+// controllers/members.ctrl.js
 exports.getMembersWithPackageDetails = async (req, res) => {
   try {
     const membersWithPackageDetails = await memberService.getMembersWithPackageDetails();
@@ -183,9 +184,10 @@ exports.getMembersWithPackageDetails = async (req, res) => {
       message: "Members with package details fetched successfully.",
     });
   } catch (error) {
-    res.status(500).json({ message: "Internale server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
+
 exports.updateMemberById = async(req,res,next) =>{
   const {id} =req.params;
   const body=req.body;
