@@ -98,6 +98,28 @@ exports.getAllUser = async (req, res, next) => {
       next(error);
   }
 };
+//get id 
+exports.getUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params; // Extract ID from the route parameters
+    const user = await userService.getUserById(id); // Fetch the user by ID from the service
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Sanitize the user data to exclude the password
+    const { password, ...userWithoutPassword } = user.toObject();
+
+    res.status(200).json({
+      data: userWithoutPassword,
+      message: "Success",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 
 exports.updateUserById = async (req, res, next) => {

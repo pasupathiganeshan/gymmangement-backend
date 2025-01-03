@@ -95,3 +95,12 @@ exports.deleteUserById = async (userId) => {
     throw new Error(err);
   }
 }
+//get id
+exports.getUserById = async (userId) => {
+  try {
+    const user = await User.findById(userId); // For Sequelize: User.findOne({ where: { id: userId } })
+    return user;
+  } catch (error) {
+    throw new Error(`Error fetching user by ID: ${error.message}`);
+  }
+};

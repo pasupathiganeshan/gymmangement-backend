@@ -23,6 +23,17 @@ exports.getAllMembers = async (filter) => {
     throw error; // Throw error to be caught in controller
   }
 };
+
+//get id to value
+exports.getMemberById = async (id) => {
+  try {
+    const member = await Members.findById(id); // Replace `Members` with your model name
+    return member;
+  } catch (error) {
+    throw new Error(`Error fetching member: ${error.message}`);
+  }
+};
+
 // services/membersService.js
 exports.getMembersWithPackageDetails = async () => {
     try {

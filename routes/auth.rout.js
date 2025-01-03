@@ -6,7 +6,7 @@ router.post('/register', authCtrl.registerUser);
 router.post('/login', authCtrl.loginUser)
 router.get('/registers',authCtrl.getAllUser)
 
-
+router.get('/:id',authCtrl.getUserById)
 router.post(
   "/update-password",
   authenticate, 

@@ -35,3 +35,16 @@ exports.getAllPackages = async () => {
     throw new Error("Failed to fetch packages.");
   }
 };
+
+//get id 
+exports.getPackageById = async (packageId) => {
+  try {
+    const package = await Package.findById(packageId); // Fetch package by ID (Mongoose)
+    // For Sequelize: return await Package.findOne({ where: { id: packageId } });
+
+    return package;
+  } catch (error) {
+    console.error("Error fetching package by ID:", error);
+    throw new Error(`Error fetching package by ID: ${error.message}`);
+  }
+};

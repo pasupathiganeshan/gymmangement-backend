@@ -93,6 +93,7 @@ exports.getAllMembersWithSeparateTables = async (req, res) => {
 
     // Format the data for active and inactive members
     const activeMembersTable = members.map(member => ({
+      id:member._id||null,
       name: member.name || null,
       address:member.address||null,
       contact: member.cellNo || null,
@@ -103,6 +104,7 @@ exports.getAllMembersWithSeparateTables = async (req, res) => {
     }));
 
     const inactiveMembersTable = inactiveMembers.map(member => ({
+      id:member._id||null,
       membershipNo: member.membershipNo,
       name: member.name || null,
       contact: member.cellNo || null,
@@ -112,6 +114,7 @@ exports.getAllMembersWithSeparateTables = async (req, res) => {
 
     // Combine active and inactive members into one list with an 'activeStatus' field
     const totalMembersTable = members.map(member => ({
+      id:member._id||null,
       membershipNo: member.membershipNo || null,
       name: member.name || null,
       contact: member.cellNo || null,
@@ -137,6 +140,29 @@ exports.getAllMembersWithSeparateTables = async (req, res) => {
   }
 };
 
+//get id
+exports.getMemberById = async (req, res, next) => {
+  try {
+    const { id } = req.params; // Extract ID from the route parameters
+
+    // Call the service to fetch the member by ID
+    const member = await memberService.getMemberById(id); // Assuming the service function is getMemberById
+
+    if (!member) {
+      return res.status(404).json({ message: "Member not found" });
+    }
+
+    // Sanitize the member object by excluding the password
+    const { password, ...memberWithoutPassword } = member.toObject ? member.toObject() : member;
+
+    res.status(200).json({ 
+      data: memberWithoutPassword, 
+      message: "Success" 
+    });
+  } catch (error) {
+    next(error); // Pass error to the global error handler
+  }
+};
 
 
 exports.getMembersWithPackageDetails = async (req, res) => {

@@ -54,6 +54,33 @@ exports.getAllPackages = async (req, res, next) => {
   }
 };
 
+//get id 
+// controllers/packageController.js
+exports.getPackageById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Optional: Validate ID format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid package ID format" });
+    }
+
+    const package = await packageService.getPackageById(id);
+
+    if (!package) {
+      return res.status(404).json({ message: "Package not found" });
+    }
+
+    res.status(200).json({
+      message: "Success",
+      data: package,
+    });
+  } catch (error) {
+    console.error("Error in getPackageById:", error);
+    next(error);
+  }
+};
+
 exports.updatePackageById = async (req, res, next) => {
   const { id } = req.params;
   const { name } = req.body;

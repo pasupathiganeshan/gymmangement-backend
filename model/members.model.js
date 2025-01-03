@@ -120,7 +120,6 @@ const MembershipSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,  // Automatically sets the current date when a record is created
   },
-
 }, { timestamps: true });
 
 // Create Membership Model

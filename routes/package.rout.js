@@ -11,6 +11,7 @@ router.get('/offers/:typeId', packagectrl.getOffersById);
 router.get('/users',packagectrl.getUserById);
 router.get('/user',packagectrl.getById);
 router.get('/',packagectrl.getAllPackages)
+router.get('/:id',packagectrl.getPackageById);
 router.put('/:id',packagectrl.updatePackageById);
 router.delete('/:id',packagectrl.deletePackageById);
 module.exports = router;
