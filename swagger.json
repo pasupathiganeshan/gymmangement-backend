@@ -862,7 +862,34 @@
                 "paymenttype": "cash",
                 "active": "true"
               }
-            }
+            }, "get": {
+        "summary": "Retrieve packages for a specific user",
+        "tags": [
+          "package"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "The ID of the user to retrieve packages for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with the list of packages"
+          },
+          "400": {
+            "description": "Bad request (e.g., missing or invalid userId)"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
           }
         },
         "responses": {
@@ -931,10 +958,66 @@
             }
           }
         }
-      }
-    },
-    "/{id}": {
-      "delete": {
+      },  "delete": {
+        "summary": "Delete a member",
+        "tags": [
+          "Members"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the member to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member deleted successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Member deleted successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid member ID",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid member ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Member not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Member not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "An unexpected error occurred"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
         "summary": "Delete a member",
         "tags": [
           "Members"
@@ -994,6 +1077,7 @@
         }
       }
     },
+   
     "/member/members-with-packages": {
       "get": {
         "summary": "Get members with package details",
