@@ -92,12 +92,14 @@ exports.getAllMembersWithSeparateTables = async (req, res) => {
     const totalMembers = members.length; // Total count of all members regardless of status
 
     // Format the data for active and inactive members
-    const activeMembersTable = activeMembers.map(member => ({
-      membershipNo: member.membershipNo || null,
+    const activeMembersTable = members.map(member => ({
       name: member.name || null,
+      address:member.address||null,
       contact: member.cellNo || null,
       enddate: member.dateOfIssue || null,
-      status: "Active" // Add status field to indicate if member is active
+      feeStatus:member.amountPay ||null,
+      startDate:member.registerDate || null,
+      status: member.active ? "Active" : "Inactive" // Add status field to indicate if member is active or inactive
     }));
 
     const inactiveMembersTable = inactiveMembers.map(member => ({
