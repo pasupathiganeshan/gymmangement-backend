@@ -110,10 +110,12 @@ exports.getAllMembersWithSeparateTables = async (req, res) => {
 
     // Combine active and inactive members into one list with an 'activeStatus' field
     const totalMembersTable = members.map(member => ({
-      membershipNo: member.membershipNo || null,
       name: member.name || null,
+      address:member.address||null,
       contact: member.cellNo || null,
       enddate: member.dateOfIssue || null,
+      feeStatus:member.amountPay ||null,
+      startDate:member.registerDate || null,
       status: member.active ? "Active" : "Inactive" // Add status field to indicate if member is active or inactive
     }));
 

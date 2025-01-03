@@ -116,6 +116,10 @@ const MembershipSchema = new mongoose.Schema({
     type: Boolean,
     default:true
   },
+  registerDate: {
+    type: Date,
+    default: Date.now,  // Automatically sets the current date when a record is created
+  },
 
 }, { timestamps: true });
 
